@@ -1,59 +1,66 @@
 /*    SPLAT OBJECT
-    contains all functional components of the splat object, including file location
-    model's location path, interface for creation calls, on-object component, and management
-    module (used for creating, enabling, disabling, and destroying splat objects). 
+    contains all functional components of splat objects, including model's file location 
+    path, interface for creation calls, on-object component, and management module (used 
+    for creating, enabling, disabling, and destroying splat objects). 
 */
 
 import { AudioSource, AvatarAnchorPointType, AvatarAttach, Entity, GltfContainer, Schemas, Transform, engine } from "@dcl/sdk/ecs";
 import { Quaternion, Vector3 } from "@dcl/sdk/math";
 
-/** splat sound location, played when splat object is placed */
-const AUDIO_SPLAT_PLACEMENT:string = "audio/splat-attack/splat.wav";
-/** splat model location */
-const MODEL_SPLAT_OBJECT:string = "models/splat-attack/splat-object.glb";
-
-//audio object setup
-//  create entity
-const splatAudioObj = engine.addEntity();
-Transform.create(splatAudioObj,
-({
-    position: Vector3.create(0,0,0),
-    scale: Vector3.create(1,1,1),
-    rotation: Quaternion.fromEulerDegrees(0, 0, 0)
-}));
-//  add audio component
-AudioSource.create(splatAudioObj, {
-    audioClipUrl: AUDIO_SPLAT_PLACEMENT,
-    loop: false,
-    playing: false,
-    volume: 5
-});
-//  tie to player
-AvatarAttach.create(splatAudioObj,{
-    anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG,
-});
-
-/** object interface used to define all data required to create a new splat object */
-export interface SplatDataObject {
-  x:number; y:number; z:number;
-}
-
-/** component data def, this will exist attached on the object's entity as a component */
-export const SplatComponentData = { 
-  /** true when this object is rendered in the scene */
-  isActive:Schemas.Boolean,
-}
-/** define component, adding it to the engine as a managed behaviour */
-export const SplatComponent = engine.defineComponent("SplatComponentData", SplatComponentData);
-
-/** manages the state of splat objects, acting as an interface for the creation, dis/able, and destruction of objects */
+/** manages the state of splat objects, acting as an interface for the creation, dis/able, 
+ *  and destruction of objects 
+ */
 export module SplatObject
 {
     /** when true debug logs are generated (toggle off when you deploy) */
-    const isDebugging:boolean = true;
+    const isDebugging:boolean = false;
+
+    /** splat sound location, played when splat object is placed */
+    const AUDIO_SPLAT_PLACEMENT:string = "audio/splat-attack/splat.wav";
+    /** splat model location */
+    const MODEL_SPLAT_OBJECT:string = "models/splat-attack/splat-object.glb";
 
     /** pool of existing objects */
     var pooledObjects:Entity[] = [];
+
+    /** object interface used to define all data required to create a new splat object */
+    export interface SplatDataObject {
+        x:number; y:number; z:number;
+    }
+
+    /** component data def, this will exist attached on the object's entity as a component */
+    export const SplatComponentData = { 
+    /** true when this object is rendered in the scene */
+        isActive:Schemas.Boolean,
+    }
+    /** define component, adding it to the engine as a managed behaviour */
+    export const SplatComponent = engine.defineComponent("SplatComponentData", SplatComponentData);
+
+    //audio object setup (single object for all sounds anchored to the player)
+    //  create entity
+    const splatAudioObj = engine.addEntity();
+    Transform.create(splatAudioObj,
+    ({
+        position: Vector3.create(0,0,0),
+        scale: Vector3.create(1,1,1),
+        rotation: Quaternion.fromEulerDegrees(0, 0, 0)
+    }));
+    //  add audio component
+    AudioSource.create(splatAudioObj, {
+        audioClipUrl: AUDIO_SPLAT_PLACEMENT,
+        loop: false,
+        playing: false,
+        volume: 5
+    });
+    //  anchor to player
+    AvatarAttach.create(splatAudioObj,{
+        anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG,
+    });
+
+    /** plays the splat placement sound */
+    export function PlaySound() {
+        AudioSource.getMutable(splatAudioObj).playing = true;
+    }
 
     /** creates a new collectible object, returning reference to its entity (this handles the creation of the entity as well so ns can handle pooling) */
     export function Create(pos:SplatDataObject):Entity {
@@ -62,7 +69,7 @@ export module SplatObject
         //attempt to find an existing unused object
         for (let i = 0; i < pooledObjects.length; i++) {
             if(!SplatComponent.get(pooledObjects[i]).isActive) {   
-                if(isDebugging) console.log("Splat Object: recycled unused object");
+                if(isDebugging) console.log("Splat Object: recycled unused object!");
                 //re-enable unused object from pooling
                 Enable(pooledObjects[i]);
                 //position object
@@ -88,7 +95,7 @@ export module SplatObject
         
         //add entity to pooling
         pooledObjects.push(entity);
-        if(isDebugging) console.log("Splat Object: created new object");
+        if(isDebugging) console.log("Splat Object: created new object!");
         //provide entity reference
         return entity;
     }

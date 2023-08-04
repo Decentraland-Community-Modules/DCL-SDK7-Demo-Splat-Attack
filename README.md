@@ -1,34 +1,27 @@
 # Splat Attack
 _demo of splat-attack scene running in preview._
 
-![demo](https://github.com/decentraland-scenes/splat-attack/blob/master/screenshots/splat-attack.gif)
+
 
 ## Description
-The objective is to cover as much of the ground as you can with paint. To view the scene, please visit [here](https://splat-attack.vercel.app/).
+The objective is to cover as much of the ground as you can with paint.
 
 ## Instructions
 * Use your mouse to look around and <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> keys on your keyboard to move forward, left, backward and right respectively. 
 * To jump, press the <kbd>Space</kbd> key.
-* To fire paint onto the ground, use the <kbd>Left Mouse Button</kbd>.
-* To calculate the approximate area covered by the paint, press the <kbd>E</kbd> key.
+* To fire paint onto the ground, use the <kbd>E</kbd> key.
+* To calculate the approximate area covered by the paint, press the <kbd>F</kbd> key.
+* To reset the surface, press the <kbd>1</kbd> key.
 
 ## Try it out
 
-**Install the CLI**
+**Setting Up Your Environment**
 
-Download and install the Decentraland CLI by running the following command:
+To start developing for Decentraland, follow [these instructions](https://docs.decentraland.org/creator/development-guide/sdk7/installation-guide/)
 
-```
-$ npm i -g decentraland
-```
+**Running The Scene**
 
-**Previewing the scene**
-
-Download this example and navigate to its directory, then run:
-
-```
-$  dcl start
-```
+You can run the scene by following [these instructions](https://docs.decentraland.org/creator/development-guide/sdk7/preview-scene/)
 
 ## Acknowledgements
 Adapted from the grid sampling solution version 4 to the total circles area problem found [here](https://rosettacode.org/wiki/Total_circles_area#Grid_Sampling_Version_4).

@@ -1,7 +1,7 @@
 {
-  "name": "dcl-sdk7-framework-parkour",
+  "name": "dcl-sdk7-splat-attack",
   "version": "1.0.0",
-  "description": "SDK7 parkour community framework",
+  "description": "SDK7 surface painting example",
   "scripts": {
     "start": "sdk-commands start",
     "deploy": "sdk-commands deploy",
@@ -10,8 +10,8 @@
     "upgrade-sdk:next": "npm install --save-dev @dcl/sdk@next"
   },
   "devDependencies": {
-    "@dcl/js-runtime": "7.3.3",
-    "@dcl/sdk": "^7.3.3"
+    "@dcl/js-runtime": "7.3.4",
+    "@dcl/sdk": "^7.3.4"
   },
   "engines": {
     "node": ">=16.0.0",
