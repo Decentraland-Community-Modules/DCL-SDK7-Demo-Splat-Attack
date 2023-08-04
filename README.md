@@ -1,7 +1,6 @@
 # Splat Attack
-_demo of splat-attack scene running in preview._
 
-
+![preview]([https://github.com/TheCryptoTrader69/SDK7-Shooting-Range/blob/main/images/preview.gif](https://github.com/TheCryptoTrader69/SDK7-Splat-Attack/blob/main/images/preview.gif))
 
 ## Description
 The objective is to cover as much of the ground as you can with paint.
