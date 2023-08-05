@@ -6,10 +6,19 @@
  * 
  */
 
+import { Entity, engine, Transform, MeshRenderer } from "@dcl/sdk/ecs";
 import { SplatSurface } from "./splat-attack/splat-surface.ui";
 
 export function main() 
 {
+	//create scene floor object
+	const entity:Entity = engine.addEntity();
+	Transform.create(entity, {
+		position: {x:16,y:0,z:16},
+		scale: {x:32,y:0,z:32},
+	});
+	MeshRenderer.setBox(entity);
+  
   //place splat surface (this lets the player paint the surface)
   SplatSurface.Move({x:8,y:0,z:8});
   SplatSurface.Scale({x:1,y:1,z:1});
